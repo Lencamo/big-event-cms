@@ -1,12 +1,17 @@
-import reqAxios from '@/axios-instance/back.js'
+import reqAxios from '@/utils/axios-instance.js'
 
 // 接口请求测试
-export const getDemoAPI = () => {
+// 升级：使用解构赋值传参
+export const registerAPI = ({ username, password, repassword }) => {
   return reqAxios({
-    method: 'GET',
-    url: '/api/getbooks',
+    method: 'POST',
+    url: '/api/reg',
 
-    // get请求url中的查询参数 —— ✨params
-    params: { id: 2 }
+    data: {
+      // 简写形式
+      username,
+      password,
+      repassword
+    }
   })
 }

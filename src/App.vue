@@ -1,20 +1,17 @@
 <template>
   <div class="app-container">
-    <el-button type="primary">按钮</el-button>
+    <!-- 一级路由挂载点 -->
+    <router-view></router-view>
   </div>
 </template>
 <script>
-import { getDemoAPI } from '@/api/index.js'
 export default {
-  created() {
-    this.getDemoFn()
-  },
-  methods: {
-    async getDemoFn() {
-      const { data: res } = await getDemoAPI()
-      console.log(res)
-    }
-  }
+  name: 'App'
 }
 </script>
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.app-container {
+  // 解决登录页面的父级高度问题
+  height: 100%;
+}
+</style>
