@@ -1,32 +1,20 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
+  <div class="app-container">
+    <el-button type="primary">按钮</el-button>
   </div>
 </template>
-
-<style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+import { getDemoAPI } from '@/api/index.js'
+export default {
+  created() {
+    this.getDemoFn()
+  },
+  methods: {
+    async getDemoFn() {
+      const { data: res } = await getDemoAPI()
+      console.log(res)
     }
   }
 }
-</style>
+</script>
+<style lang="less" scoped></style>

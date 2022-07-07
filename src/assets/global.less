@@ -1,0 +1,43 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+// 全局重置 element-ui 组件库的基础样式
+.el-input__inner,
+.el-button,
+.el-link,
+.el-menu-item,
+.el-submenu__title,
+.el-form-item__label {
+  font-size: 12px;
+}
+
+// 重置菜单的基础样式
+.el-menu.el-menu--horizontal {
+  height: 60px;
+  border-bottom: none;
+}
+
+// 重置卡片的基础样式
+.el-card.is-always-shadow,
+.el-card.is-hover-shadow:focus,
+.el-card.is-hover-shadow:hover {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  font-size: 13px;
+}
+
+// 全局重置 el-table 的样式
+.el-table thead {
+  color: #000;
+}
+
+.el-table {
+  font-size: 12px;
+}
+
+.el-dialog__body {
+  padding: 10px 20px;
+}
