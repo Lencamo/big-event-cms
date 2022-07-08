@@ -4,11 +4,13 @@
     <router-view></router-view>
   </div>
 </template>
+
 <script>
 export default {
-  name: 'App'
+  name: 'comApp'
 }
 </script>
+
 <style lang="less" scoped>
 .app-container {
   // 解决登录页面的父级高度问题

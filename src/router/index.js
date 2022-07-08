@@ -5,6 +5,10 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/',
+    redirect: '/login'
+  },
+  {
     path: '/login',
     // 使用 路由✨懒加载
     component: () => import('@/views/login/comLogin.vue')
