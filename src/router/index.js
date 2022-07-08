@@ -16,6 +16,11 @@ const routes = [
   {
     path: '/register',
     component: () => import('@/views/register/comRegister.vue')
+  },
+  {
+    path: '/layout',
+    // 使用 路由✨懒加载
+    component: () => import('@/views/layout/comLayout.vue')
   }
 ]
 

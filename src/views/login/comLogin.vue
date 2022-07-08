@@ -82,6 +82,8 @@ export default {
             // this.$store.commit('updateToken', res.token)
             // 方式2
             this.updateToken(res.token)
+
+            this.$router.push('/layout')
           } else {
             this.$message.error(res.message)
           }
