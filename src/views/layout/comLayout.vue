@@ -140,8 +140,8 @@ export default {
 
     async getMenusListFn() {
       const { data: res } = await getMenusAPI()
-      console.log(res)
-      console.log(res.data)
+      // console.log(res)
+      // console.log(res.data)
       // 数据处理
       this.menus = res.data
     }

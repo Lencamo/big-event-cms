@@ -1,6 +1,6 @@
 import reqAxios from '@/utils/axios-instance.js'
 
-import $store from '@/store/index'
+// import $store from '@/store/index'
 
 /**
  * 注册接口
@@ -46,11 +46,11 @@ export const loginAPI = ({ username, password }) => {
 export const getUserInfoAPI = () => {
   return reqAxios({
     method: 'GET',
-    url: '/my/userinfo',
+    url: '/my/userinfo'
 
-    headers: {
-      Authorization: $store.state.token
-    }
+    // headers: {
+    //   Authorization: $store.state.token
+    // }
   })
 }
 
@@ -61,10 +61,10 @@ export const getUserInfoAPI = () => {
 export const getMenusAPI = () => {
   return reqAxios({
     method: 'GET',
-    url: '/my/menus',
+    url: '/my/menus'
 
-    headers: {
-      Authorization: $store.state.token
-    }
+    // headers: {
+    //   Authorization: $store.state.token
+    // }
   })
 }
