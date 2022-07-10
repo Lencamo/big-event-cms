@@ -7,10 +7,10 @@
 
 <script>
 export default {
-  name: 'comApp',
-  created() {
-    this.$store.dispatch('initUserInfo')
-  }
+  name: 'comApp'
+  // created() {
+  //   this.$store.dispatch('initUserInfo')
+  // }
 }
 </script>
 

@@ -64,6 +64,7 @@ export default {
         .then(() => {
           this.$message.success('退出成功!')
           this.$store.commit('updateToken', '')
+          this.$store.commit('updateUserInfo', '')
           this.$router.replace('/login')
         })
         .catch(() => {
