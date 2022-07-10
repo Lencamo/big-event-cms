@@ -1,8 +1,10 @@
 import reqAxios from '@/utils/axios-instance.js'
 
+import $store from '@/store/index'
+
 /**
  * 注册接口
- * @param {*} param0 {username: 用户名, password: 密码, repassword: 二次密码}
+ * @param {*} param0 {username: 用户名, password: 密码, repassword: 确认密码}
  * @returns Promise对象
  */
 // 升级：使用解构赋值传参
@@ -33,6 +35,17 @@ export const loginAPI = ({ username, password }) => {
     data: {
       username,
       password
+    }
+  })
+}
+
+export const getUserInfoAPI = () => {
+  return reqAxios({
+    method: 'GET',
+    url: '/my/userinfo',
+
+    headers: {
+      Authorization: $store.state.token
     }
   })
 }

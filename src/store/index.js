@@ -2,6 +2,9 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 
+// 导入所需要的API
+import { getUserInfoAPI } from '@/api'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -14,7 +17,13 @@ export default new Vuex.Store({
       state.token = newToken
     }
   },
-  actions: {},
+  actions: {
+    // 获取用户基本信息
+    async initUserInfo(store) {
+      const { data: res } = await getUserInfoAPI()
+      console.log(res)
+    }
+  },
   getters: {},
   modules: {},
   // vuex数持久化存储
