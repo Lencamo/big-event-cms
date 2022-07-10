@@ -35,7 +35,6 @@
           <el-menu-item index="2" @click="menu_logiout"
             ><i class="el-icon-switch-button"></i>退出</el-menu-item
           >
-          >
         </el-menu>
       </el-header>
       <el-container>
@@ -56,42 +55,37 @@
             text-color="#fff"
             active-text-color="#409EFF"
             unique-opened
+            router
           >
-            <el-menu-item index="/home">
-              <i class="el-icon-s-home"></i>
-              <span slot="title">首页</span>
-            </el-menu-item>
-            <el-submenu index="1">
-              <template slot="title">
-                <i class="el-icon-s-order"></i>
-                <span>文章管理</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item index="1-1"
-                  ><i class="el-icon-s-data"></i>文章分类</el-menu-item
+            <!-- 外部嵌套template标签 -->
+            <!-- ① 进行数据的一次循环 -->
+            <template v-for="item in menus">
+              <!-- 不包含二级菜单 -->
+              <el-menu-item
+                v-if="item.children === null"
+                :index="item.indexPath"
+                :key="item.indexPath"
+              >
+                <i :class="item.icon"></i>
+                <span slot="title">{{ item.title }}</span>
+              </el-menu-item>
+
+              <!-- 包含二级菜单 -->
+              <el-submenu v-else :index="item.indexPath" :key="item.indexPath">
+                <template slot="title">
+                  <i :class="item.icon"></i>
+                  <span>{{ item.title }}</span>
+                </template>
+                <!-- ② 进行数据的二次循环 -->
+                <el-menu-item
+                  v-for="subItem in item.children"
+                  :key="subItem.indexPath"
+                  :index="subItem.indexPath"
                 >
-                <el-menu-item index="1-2"
-                  ><i class="el-icon-document-copy"></i>文章列表</el-menu-item
-                >
-              </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="2">
-              <template slot="title">
-                <i class="el-icon-user-solid"></i>
-                <span>个人中心</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item index="2-1"
-                  ><i class="el-icon-s-operation"></i>基本资料</el-menu-item
-                >
-                <el-menu-item index="2-2"
-                  ><i class="el-icon-camera"></i>更换头像</el-menu-item
-                >
-                <el-menu-item index="2-3"
-                  ><i class="el-icon-key"></i>重置密码</el-menu-item
-                >
-              </el-menu-item-group>
-            </el-submenu>
+                  <i :class="subItem.icon"></i>{{ subItem.title }}
+                </el-menu-item>
+              </el-submenu>
+            </template>
           </el-menu>
         </el-aside>
         <el-container>
@@ -106,9 +100,15 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import { getMenusAPI } from '@/api/index'
 
 export default {
   name: 'comLayout',
+  data() {
+    return {
+      menus: []
+    }
+  },
   computed: {
     ...mapGetters(['nickname', 'username', 'user_pic'])
   },
@@ -128,7 +128,27 @@ export default {
         .catch(() => {
           this.$message.info('已取消退出操作')
         })
+    },
+
+    // element-ui侧边导航栏附带函数
+    handleOpen(key, keyPath) {
+      console.log(key, keyPath)
+    },
+    handleClose(key, keyPath) {
+      console.log(key, keyPath)
+    },
+
+    async getMenusListFn() {
+      const { data: res } = await getMenusAPI()
+      console.log(res)
+      console.log(res.data)
+      // 数据处理
+      this.menus = res.data
     }
+  },
+  created() {
+    // 当进入当前组件时，获取侧边栏导航数据
+    this.getMenusListFn()
   }
 }
 </script>

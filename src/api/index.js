@@ -39,10 +39,29 @@ export const loginAPI = ({ username, password }) => {
   })
 }
 
+/**
+ * 获取-用户基本资料接口
+ * @returns Promise对象
+ */
 export const getUserInfoAPI = () => {
   return reqAxios({
     method: 'GET',
     url: '/my/userinfo',
+
+    headers: {
+      Authorization: $store.state.token
+    }
+  })
+}
+
+/**
+ * 获取-侧边栏数据接口
+ * @returns Promise对象
+ */
+export const getMenusAPI = () => {
+  return reqAxios({
+    method: 'GET',
+    url: '/my/menus',
 
     headers: {
       Authorization: $store.state.token
