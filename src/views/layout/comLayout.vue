@@ -46,6 +46,53 @@
             <img v-else src="../../assets/images/logo.png" alt="" />
             <span>欢迎 {{ nickname || username }}</span>
           </div>
+          <!-- 侧边栏导航部分 -->
+          <el-menu
+            default-active="/home"
+            class="el-menu-vertical-demo"
+            @open="handleOpen"
+            @close="handleClose"
+            background-color="#23262E"
+            text-color="#fff"
+            active-text-color="#409EFF"
+            unique-opened
+          >
+            <el-menu-item index="/home">
+              <i class="el-icon-s-home"></i>
+              <span slot="title">首页</span>
+            </el-menu-item>
+            <el-submenu index="1">
+              <template slot="title">
+                <i class="el-icon-s-order"></i>
+                <span>文章管理</span>
+              </template>
+              <el-menu-item-group>
+                <el-menu-item index="1-1"
+                  ><i class="el-icon-s-data"></i>文章分类</el-menu-item
+                >
+                <el-menu-item index="1-2"
+                  ><i class="el-icon-document-copy"></i>文章列表</el-menu-item
+                >
+              </el-menu-item-group>
+            </el-submenu>
+            <el-submenu index="2">
+              <template slot="title">
+                <i class="el-icon-user-solid"></i>
+                <span>个人中心</span>
+              </template>
+              <el-menu-item-group>
+                <el-menu-item index="2-1"
+                  ><i class="el-icon-s-operation"></i>基本资料</el-menu-item
+                >
+                <el-menu-item index="2-2"
+                  ><i class="el-icon-camera"></i>更换头像</el-menu-item
+                >
+                <el-menu-item index="2-3"
+                  ><i class="el-icon-key"></i>重置密码</el-menu-item
+                >
+              </el-menu-item-group>
+            </el-submenu>
+          </el-menu>
         </el-aside>
         <el-container>
           <!-- 3.1页面主体区域 -->
@@ -143,6 +190,15 @@ export default {
   span {
     color: white;
     font-size: 12px;
+  }
+}
+
+// 侧边栏菜单的样式
+.el-aside {
+  .el-submenu,
+  .el-menu-item {
+    width: 200px;
+    user-select: none;
   }
 }
 </style>
