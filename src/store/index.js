@@ -34,7 +34,11 @@ export default new Vuex.Store({
       }
     }
   },
-  getters: {},
+  getters: {
+    nickname: (state) => state.userInfo.nickname,
+    username: (state) => state.userInfo.username,
+    user_pic: (state) => state.userInfo.user_pic
+  },
   modules: {},
   // vuex数持久化存储
   plugins: [createPersistedState()]
