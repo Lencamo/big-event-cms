@@ -56,6 +56,10 @@ const routes = [
       {
         path: 'user-avatar',
         component: () => import('@/components/person-center/changePic.vue')
+      },
+      {
+        path: 'user-pwd',
+        component: () => import('@/components/person-center/resetPassword.vue')
       }
     ]
   }

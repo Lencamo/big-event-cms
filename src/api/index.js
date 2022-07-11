@@ -109,3 +109,21 @@ export const updateAvatarAPI = (avatar) => {
     }
   })
 }
+
+/**
+ * 更新-用户密码
+ * @param {*} param0 { old_pwd: 旧密码, new_pwd: 新密码, re_pwd: 新密码确认 }
+ * @returns Promise对象
+ */
+export const updatePwdAPI = ({ old_pwd, new_pwd, re_pwd }) => {
+  return reqAxios({
+    url: '/my/updatepwd',
+    method: 'PATCH',
+
+    data: {
+      old_pwd,
+      new_pwd,
+      re_pwd
+    }
+  })
+}
