@@ -22,7 +22,14 @@ const routes = [
   {
     path: '/layout',
     // 使用 路由✨懒加载
-    component: () => import('@/views/layout/comLayout.vue')
+    component: () => import('@/views/layout/comLayout.vue'),
+    redirect: '/layout/home',
+    children: [
+      {
+        path: 'home',
+        component: () => import('@/components/home.vue')
+      }
+    ]
   }
 ]
 

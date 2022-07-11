@@ -90,7 +90,9 @@
         </el-aside>
         <el-container>
           <!-- 3.1页面主体区域 -->
-          <el-main>Main</el-main>
+          <el-main>
+            <router-view></router-view>
+          </el-main>
           <!-- 3.2底部footer区域 -->
           <el-footer>© www.deer-sir.cn - 鹿先生</el-footer>
         </el-container>
