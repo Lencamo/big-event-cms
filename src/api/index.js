@@ -93,3 +93,19 @@ export const updateUserInfoAPI = ({
     }
   })
 }
+
+/**
+ * 更新-用户头像接口
+ * @param {*} avatar 头像的base64字符串
+ * @returns Promise对象
+ */
+export const updateAvatarAPI = (avatar) => {
+  return reqAxios({
+    url: '/my/update/avatar',
+    method: 'PATCH',
+
+    data: {
+      avatar
+    }
+  })
+}
