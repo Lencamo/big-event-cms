@@ -68,3 +68,28 @@ export const getMenusAPI = () => {
     // }
   })
 }
+
+/**
+ * 更新-用户基本资料接口
+ * @param {*} param0  { id: 用户id, email: 用户邮箱, nickname: 用户昵称, user_pic: 用户头像地址, username: 用户名 }
+ * @returns  Promise对象
+ */
+export const updateUserInfoAPI = ({
+  id,
+  email,
+  nickname,
+  user_pic,
+  username
+}) => {
+  return reqAxios({
+    url: '/my/userinfo',
+    method: 'PUT',
+    data: {
+      id,
+      email,
+      nickname,
+      user_pic,
+      username
+    }
+  })
+}

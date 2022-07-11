@@ -47,7 +47,7 @@
           </div>
           <!-- 侧边栏导航部分 -->
           <el-menu
-            default-active="/home"
+            :default-active="$route.path"
             class="el-menu-vertical-demo"
             @open="handleOpen"
             @close="handleClose"
@@ -63,15 +63,19 @@
               <!-- 不包含二级菜单 -->
               <el-menu-item
                 v-if="item.children === null"
-                :index="item.indexPath"
-                :key="item.indexPath"
+                :index="'/layout' + item.indexPath"
+                :key="'/layout' + item.indexPath"
               >
                 <i :class="item.icon"></i>
                 <span slot="title">{{ item.title }}</span>
               </el-menu-item>
 
               <!-- 包含二级菜单 -->
-              <el-submenu v-else :index="item.indexPath" :key="item.indexPath">
+              <el-submenu
+                v-else
+                :index="'/layout' + item.indexPath"
+                :key="'/layout' + item.indexPath"
+              >
                 <template slot="title">
                   <i :class="item.icon"></i>
                   <span>{{ item.title }}</span>
@@ -79,8 +83,8 @@
                 <!-- ② 进行数据的二次循环 -->
                 <el-menu-item
                   v-for="subItem in item.children"
-                  :key="subItem.indexPath"
-                  :index="subItem.indexPath"
+                  :key="'/layout' + subItem.indexPath"
+                  :index="'/layout' + subItem.indexPath"
                 >
                   <i :class="subItem.icon"></i>{{ subItem.title }}
                 </el-menu-item>
@@ -134,10 +138,10 @@ export default {
 
     // element-ui侧边导航栏附带函数
     handleOpen(key, keyPath) {
-      console.log(key, keyPath)
+      // console.log(key, keyPath)
     },
     handleClose(key, keyPath) {
-      console.log(key, keyPath)
+      // console.log(key, keyPath)
     },
 
     async getMenusListFn() {
