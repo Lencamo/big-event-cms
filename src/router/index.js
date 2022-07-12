@@ -60,6 +60,10 @@ const routes = [
       {
         path: 'user-pwd',
         component: () => import('@/components/person-center/resetPassword.vue')
+      },
+      {
+        path: 'art-cate',
+        component: () => import('@/components/article-manage/articleCase.vue')
       }
     ]
   }
