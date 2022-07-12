@@ -127,3 +127,14 @@ export const updatePwdAPI = ({ old_pwd, new_pwd, re_pwd }) => {
     }
   })
 }
+
+/**
+ * 获取-文章分类接口
+ * @returns Promise对象
+ */
+export const getArtCateListAPI = () => {
+  return reqAxios({
+    method: 'GET',
+    url: '/my/cate/list'
+  })
+}
