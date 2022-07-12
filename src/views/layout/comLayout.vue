@@ -13,26 +13,39 @@
           background-color="#23262E"
           text-color="#fff"
           active-text-color="#409EFF"
+          router
         >
           <!-- 个人中心 —— 使用element-ui的图标 -->
           <el-submenu index="1">
             <template slot="title">
               <!-- 头像 -->
-              <img src="../../assets/images/avatar.jpg" alt="" class="avatar" />
+              <img
+                v-if="!$store.state.userInfo.user_pic"
+                src="../../assets/images/avatar.jpg"
+                alt=""
+                class="avatar"
+              />
+              <img
+                v-else
+                :src="$store.state.userInfo.user_pic"
+                alt=""
+                class="avatar"
+              />
               <span>个人中心</span>
             </template>
-            <el-menu-item index="1-1"
+            <el-menu-item index="/layout/user-info"
               ><i class="el-icon-s-operation"></i>基本资料</el-menu-item
             >
-            <el-menu-item index="1-2"
+            <el-menu-item index="/layout/user-avatar"
               ><i class="el-icon-camera"></i>更换头像</el-menu-item
             >
-            <el-menu-item index="1-3"
+            <el-menu-item index="/layout/user-pwd"
               ><i class="el-icon-key"></i>重置密码</el-menu-item
             >
           </el-submenu>
           <!-- 退出 -->
-          <el-menu-item index="2" @click="menu_logiout"
+          <!-- 此处对index特殊✨处理，防止其受router属性的影响 -->
+          <el-menu-item index="" @click="menu_logiout"
             ><i class="el-icon-switch-button"></i>退出</el-menu-item
           >
         </el-menu>

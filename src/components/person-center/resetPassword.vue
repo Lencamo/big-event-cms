@@ -34,6 +34,9 @@ import { updatePwdAPI } from '@/api'
 export default {
   name: 'resetPassword',
   data() {
+    // 按道理应该有一个旧密码的验证接口🤔
+    // 验证旧密码是否正确
+
     // 检测新旧密码是否相同
     const samePwd = (rule, value, callback) => {
       if (value === this.pwdForm.old_pwd) {
@@ -98,6 +101,10 @@ export default {
 
         this.$message.success('更新密码成功！')
         this.$refs.pwdFormRef.resetFields()
+
+        // 重置密码后的操作
+        this.$store.commit('updateToken', '')
+        this.$router.push('/login')
       })
     },
     // 重置按钮->点击事件
