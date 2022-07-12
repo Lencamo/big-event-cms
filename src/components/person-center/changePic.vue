@@ -30,6 +30,7 @@
             type="success"
             icon="el-icon-upload"
             :disabled="user_pic === ''"
+            @click="updateImg"
             >上传头像</el-button
           >
         </div>
@@ -76,21 +77,26 @@ export default {
         const fr = new FileReader()
         fr.readAsDataURL(files[0])
         // 调用监听事件
-        fr.onload = async (e) => {
+        fr.onload = (e) => {
           // console.log(e.target)
           this.user_pic = e.target.result
-
-          // 更新数据
-          const { data: res } = await updateAvatarAPI(this.user_pic)
-          // console.log(res)
-          if (res.code === 0) {
-            this.$message.success('上传头像成功！')
-            this.$store.dispatch('initUserInfo')
-          } else {
-            this.$message.error('上传头像失败！')
-            this.user_pic = ''
-          }
         }
+      }
+    },
+
+    // 更新数据
+    async updateImg() {
+      const { data: res } = await updateAvatarAPI(this.user_pic)
+      // console.log(res)
+      if (res.code === 0) {
+        this.$message.success('上传头像成功！')
+        this.$store.dispatch('initUserInfo')
+
+        // 上传头像后清空预览
+        this.user_pic = ''
+      } else {
+        this.$message.error('上传头像失败！')
+        this.user_pic = ''
       }
     }
   }
