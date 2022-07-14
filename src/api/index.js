@@ -154,3 +154,20 @@ export const addArtCateAPI = ({ cate_name, cate_alias }) => {
     }
   })
 }
+
+/**
+ * 更新-文章分类接口
+ * @param {*} param0 { id: 文章分类id, cate_name: 文章分类名字, cate_alias: 文章分类别名 }
+ * @returns Promise对象
+ */
+export const updateArtCateAPI = ({ id, cate_name, cate_alias }) => {
+  return reqAxios({
+    url: '/my/cate/info',
+    method: 'PUT',
+    data: {
+      id,
+      cate_name,
+      cate_alias
+    }
+  })
+}

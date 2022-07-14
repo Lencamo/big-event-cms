@@ -4,9 +4,7 @@
     <el-card class="box-card">
       <div slot="header" class="clearfix header-box">
         <span>文章分类</span>
-        <el-button type="primary" @click="dialogVisible = true"
-          >添加分类</el-button
-        >
+        <el-button type="primary" @click="addCateBtnFn">添加分类</el-button>
       </div>
       <!-- 使用element-ui的table组件 -->
       <el-table :data="cateList" style="width: 100%" border stripe>
@@ -67,7 +65,7 @@
   </div>
 </template>
 <script>
-import { getArtCateListAPI, addArtCateAPI } from '@/api/index'
+import { getArtCateListAPI, addArtCateAPI, updateArtCateAPI } from '@/api/index'
 
 export default {
   name: 'articleCase',
@@ -75,6 +73,9 @@ export default {
     return {
       cateList: [],
       dialogVisible: false,
+      // 处于添加还是修改状态 的 标记
+      isEdit: false,
+      editId: '',
       // 添加表单的数据对象
       addForm: {
         cate_name: '',
@@ -111,20 +112,38 @@ export default {
       const res = await getArtCateListAPI()
       this.cateList = res.data.data
     },
-    // 添加文章对话框取消按钮
+    // - 添加、修改文章对话框取消按钮
     cancelFn() {
       this.dialogVisible = false
     },
-    // 添加文章对话框确认按钮
+    // - 添加、修改文章对话框确认按钮
     confirmFn() {
       // 表单校验
       this.$refs.addRef.validate(async (valid) => {
         if (valid) {
-          const { data: res } = await addArtCateAPI(this.addForm)
-          // console.log(res)
-          // 请求成功、失败提示
-          if (res.code !== 0) return this.$message.error(res.message)
-          this.$message.success(res.message)
+          if (this.isEdit) {
+            // + 修改操作
+            // 方式1
+            // this.addForm.id = this.editId
+            // const { data: res } = await updateArtCateAPI(this.addForm)
+
+            // 方式2 🎉(直接以结构赋值的方式传入数据)
+            const { data: res } = await updateArtCateAPI({
+              id: this.editId,
+              ...this.addForm
+            })
+            // console.log(res)
+            // 请求成功、失败提示
+            if (res.code !== 0) return this.$message.error(res.message)
+            this.$message.success(res.message)
+          } else {
+            // + 新增操作
+            const { data: res } = await addArtCateAPI(this.addForm)
+            // console.log(res)
+            // 请求成功、失败提示
+            if (res.code !== 0) return this.$message.error(res.message)
+            this.$message.success(res.message)
+          }
 
           // 刷新列表数据 并 关闭对话框
           this.initCateListFn()
@@ -135,13 +154,24 @@ export default {
         }
       })
     },
-    // 添加文章-关闭时的清空数据
+    // - 添加、修改文章-关闭时的清空数据
     ondialogCloseFn() {
       this.$refs.addRef.resetFields()
+    },
+    // 添加文章-触发按钮
+    addCateBtnFn() {
+      // 标记状态
+      this.isEdit = false
+      this.editId = ''
+
+      this.dialogVisible = true
     },
     // 修改文章-触发按钮
     updateCateBtnFn(obj) {
       console.log(obj)
+      // 标记状态
+      this.isEdit = true
+      this.editId = obj.id
 
       // 实现数据回显
       this.dialogVisible = true
