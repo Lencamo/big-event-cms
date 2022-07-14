@@ -15,13 +15,22 @@
         <el-table-column label="分类名称" prop="cate_name"></el-table-column>
         <el-table-column label="分类别名" prop="cate_alias"></el-table-column>
         <el-table-column align="操作">
-          <el-button size="mini" type="primary">修改</el-button>
-          <el-button size="mini" type="danger">删除</el-button>
+          <!-- 利用插槽获取行数据 -->
+          <!-- scope对象：{row: 行对象} -->
+          <template slot-scope="scope">
+            <el-button
+              size="mini"
+              type="primary"
+              @click="updateCateBtnFn(scope.row)"
+              >修改</el-button
+            >
+            <el-button size="mini" type="danger">删除</el-button>
+          </template>
         </el-table-column>
       </el-table>
     </el-card>
 
-    <!-- 添加文章分类-对话框 -->
+    <!-- 添加、修改文章分类-对话框 -->
     <el-dialog
       title="提示"
       :visible.sync="dialogVisible"
@@ -112,7 +121,7 @@ export default {
       this.$refs.addRef.validate(async (valid) => {
         if (valid) {
           const { data: res } = await addArtCateAPI(this.addForm)
-          console.log(res)
+          // console.log(res)
           // 请求成功、失败提示
           if (res.code !== 0) return this.$message.error(res.message)
           this.$message.success(res.message)
@@ -129,6 +138,15 @@ export default {
     // 添加文章-关闭时的清空数据
     ondialogCloseFn() {
       this.$refs.addRef.resetFields()
+    },
+    // 修改文章-触发按钮
+    updateCateBtnFn(obj) {
+      console.log(obj)
+
+      // 实现数据回显
+      this.dialogVisible = true
+      this.addForm.cate_name = obj.cate_name
+      this.addForm.cate_alias = obj.cate_alias
     }
   }
 }
