@@ -73,7 +73,7 @@ const router = new VueRouter({
   routes
 })
 
-const whiteList = ['/login', '/reg']
+const whiteList = ['/login', '/register']
 
 // 发生页面跳转时触发
 router.beforeEach((to, from, next) => {
