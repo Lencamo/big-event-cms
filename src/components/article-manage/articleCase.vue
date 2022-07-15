@@ -175,8 +175,12 @@ export default {
 
       // 实现数据回显
       this.dialogVisible = true
-      this.addForm.cate_name = obj.cate_name
-      this.addForm.cate_alias = obj.cate_alias
+
+      // 解决点击修改按钮，后点击添加按钮时数据回显的小bug
+      this.$nextTick(() => {
+        this.addForm.cate_name = obj.cate_name
+        this.addForm.cate_alias = obj.cate_alias
+      })
     }
   }
 }
