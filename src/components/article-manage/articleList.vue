@@ -70,7 +70,7 @@
             style="width: 100%"
           >
             <!-- 文章分类选择 - 发布文章区域 -->
-            <!-- label是页面展示的值，value的🚩值是给js调用待使用的数据 -->
+            <!-- label是页面展示的值，value的🚩值是给js调用待使用的数据（pubForm.cata_id） -->
             <el-option
               :label="item.cate_name"
               :value="item.id"
@@ -105,6 +105,15 @@
           <!-- 选择封面的按钮 -->
           <el-button type="text" @click="chooseImgFn">+ 选择封面</el-button>
         </el-form-item>
+        <!-- 发布与存为草稿按钮 -->
+        <el-form-item>
+          <el-button type="primary" @click="pubArticleFn('已发布')"
+            >发布</el-button
+          >
+          <el-button type="info" @click="pubArticleFn('草稿')"
+            >存为草稿</el-button
+          >
+        </el-form-item>
       </el-form>
     </el-dialog>
   </div>
@@ -134,7 +143,8 @@ export default {
         title: '',
         cate_id: '',
         content: '',
-        cover_img: null // 用户选择的封面图片（null 表示没有选择任何封面）
+        cover_img: null, // 用户选择的封面图片（null 表示没有选择任何封面）
+        state: '' // 文章的发布状态，可选值有两个：草稿、已发布
       },
       // 发布文章对话框表单验证规则对象
       pubFormRules: {
@@ -197,7 +207,7 @@ export default {
     chooseImgFn() {
       this.$refs.iptFileRef.click()
     },
-    // 封面选择改变的事件（图片预览：这里采用第二种方式）
+    // 封面选择改变的事件（图片预览：这里采用第二种方式 【注意比较与前面的图片预览所以的区别】）
     onCoverChangeFn(e) {
       // 获取用户选择的文件列表
       const files = e.target.files
@@ -212,6 +222,12 @@ export default {
         const url = URL.createObjectURL(files[0])
         this.$refs.imgRef.setAttribute('src', url)
       }
+    },
+    // 发布文章或草稿-按钮点击事件
+    pubArticleFn(str) {
+      // 1. 设置发布状态
+      this.pubForm.state = str
+      console.log(this.pubForm)
     }
   }
 }
