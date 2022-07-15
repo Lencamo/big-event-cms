@@ -7,6 +7,8 @@ import store from './store'
 import '@/assets/global.less'
 // 引入element-ui
 import '@/element-ui/index.js'
+// 引入富文本编辑器
+import '@/utils/vue-quill-editor/index'
 
 Vue.config.productionTip = false
 
