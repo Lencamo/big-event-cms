@@ -133,6 +133,7 @@ export default {
   },
   methods: {
     menu_logiout() {
+      // 使用element-ui的MessageBox弹框
       this.$confirm('您确认退出登录吗', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
