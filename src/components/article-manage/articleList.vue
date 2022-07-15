@@ -84,6 +84,27 @@
         <el-form-item label="文章内容" prop="content">
           <quill-editor v-model="pubForm.content"></quill-editor>
         </el-form-item>
+        <!-- 文章封面 -->
+        <el-form-item label="文章封面">
+          <!-- 用来显示封面的图片 -->
+          <img
+            src="../../assets/images/cover.jpg"
+            alt=""
+            class="cover-img"
+            ref="imgRef"
+          />
+          <br />
+          <!-- 文件选择框，默认被隐藏 -->
+          <input
+            type="file"
+            style="display: none"
+            accept="image/*"
+            ref="iptFileRef"
+            @change="onCoverChangeFn"
+          />
+          <!-- 选择封面的按钮 -->
+          <el-button type="text" @click="chooseImgFn">+ 选择封面</el-button>
+        </el-form-item>
       </el-form>
     </el-dialog>
   </div>
@@ -91,6 +112,8 @@
 
 <script>
 import { getArtCateListAPI } from '@/api/index'
+// 注意✨：js中引入图片要所以import
+import defaultImg from '@/assets/images/cover.jpg'
 
 export default {
   name: 'articleList',
@@ -110,7 +133,8 @@ export default {
       pubForm: {
         title: '',
         cate_id: '',
-        content: ''
+        content: '',
+        cover_img: null // 用户选择的封面图片（null 表示没有选择任何封面）
       },
       // 发布文章对话框表单验证规则对象
       pubFormRules: {
@@ -127,9 +151,7 @@ export default {
         cate_id: [
           { required: true, message: '请选择文章标题', trigger: 'blur' }
         ],
-        content: [
-          { required: true, message: '输入文章内容', trigger: 'blur' }
-        ]
+        content: [{ required: true, message: '输入文章内容', trigger: 'blur' }]
       }
     }
   },
@@ -170,6 +192,26 @@ export default {
         .catch(() => {
           this.$message.success('已取消！')
         })
+    },
+    // 间接代替文件选择框的点击事件
+    chooseImgFn() {
+      this.$refs.iptFileRef.click()
+    },
+    // 封面选择改变的事件（图片预览：这里采用第二种方式）
+    onCoverChangeFn(e) {
+      // 获取用户选择的文件列表
+      const files = e.target.files
+      if (files.length === 0) {
+        // 用户没有选择封面
+        this.pubForm.cover_img = null
+
+        this.$refs.imgRef.setAttribute('src', defaultImg)
+      } else {
+        // 用户选择了封面
+        this.pubForm.cover_img = files[0]
+        const url = URL.createObjectURL(files[0])
+        this.$refs.imgRef.setAttribute('src', url)
+      }
     }
   }
 }
@@ -191,5 +233,12 @@ export default {
 // [data-v-hash] .ql-editor 这样就能选中组件内的标签的class类名了
 ::v-deep .ql-editor {
   min-height: 300px;
+}
+
+// 设置图片封面的宽高
+.cover-img {
+  width: 400px;
+  height: 280px;
+  object-fit: cover;
 }
 </style>
