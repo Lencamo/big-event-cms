@@ -22,7 +22,12 @@
               @click="updateCateBtnFn(scope.row)"
               >修改</el-button
             >
-            <el-button size="mini" type="danger">删除</el-button>
+            <el-button
+              size="mini"
+              type="danger"
+              @click="deleteCateBtnFn(scope.row)"
+              >删除</el-button
+            >
           </template>
         </el-table-column>
       </el-table>
@@ -65,7 +70,12 @@
   </div>
 </template>
 <script>
-import { getArtCateListAPI, addArtCateAPI, updateArtCateAPI } from '@/api/index'
+import {
+  getArtCateListAPI,
+  addArtCateAPI,
+  updateArtCateAPI,
+  delArtCateAPI
+} from '@/api/index'
 
 export default {
   name: 'articleCase',
@@ -112,11 +122,11 @@ export default {
       const res = await getArtCateListAPI()
       this.cateList = res.data.data
     },
-    // - 添加、修改文章对话框取消按钮
+    // - 添加、修改文章分类对话框取消按钮
     cancelFn() {
       this.dialogVisible = false
     },
-    // - 添加、修改文章对话框确认按钮
+    // - 添加、修改文章分类对话框确认按钮
     confirmFn() {
       // 表单校验
       this.$refs.addRef.validate(async (valid) => {
@@ -154,11 +164,11 @@ export default {
         }
       })
     },
-    // - 添加、修改文章-关闭时的清空数据
+    // - 添加、修改文章分类-关闭时的清空数据
     ondialogCloseFn() {
       this.$refs.addRef.resetFields()
     },
-    // 添加文章-触发按钮
+    // 添加文章分类-触发按钮
     addCateBtnFn() {
       // 标记状态
       this.isEdit = false
@@ -166,7 +176,7 @@ export default {
 
       this.dialogVisible = true
     },
-    // 修改文章-触发按钮
+    // 修改文章分类-触发按钮
     updateCateBtnFn(obj) {
       console.log(obj)
       // 标记状态
@@ -181,6 +191,17 @@ export default {
         this.addForm.cate_name = obj.cate_name
         this.addForm.cate_alias = obj.cate_alias
       })
+    },
+    // 删除文章分类-触发按钮
+    async deleteCateBtnFn(obj) {
+      console.log(obj)
+      const { data: res } = await delArtCateAPI(obj.id)
+
+      // 请求成功、失败提示
+      if (res.code !== 0) return this.$message.error('删除分类失败！')
+      this.$message.success('删除分类成功！')
+      // 重新请求列表数据
+      this.initCateListFn()
     }
   }
 }
