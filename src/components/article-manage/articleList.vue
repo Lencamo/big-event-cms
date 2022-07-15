@@ -14,8 +14,15 @@
               placeholder="请选择分类"
               size="small"
             >
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
+              <!-- 文章分类选择 - 搜索栏区域 -->
+              <!-- label是页面展示的值，value的🚩值是给js调用待使用的数据 -->
+              <el-option
+                :label="item.cate_name"
+                :value="item.id"
+                v-for="item in cateList"
+                :key="item.id"
+              >
+              </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="发布状态" style="margin-left: 15px">
@@ -29,7 +36,6 @@
             <el-button type="info" size="small">重置</el-button>
           </el-form-item>
         </el-form>
-
         <!-- 发表文章的按钮 -->
         <el-button
           type="primary"
@@ -64,8 +70,15 @@
             placeholder="请选择分类"
             style="width: 100%"
           >
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
+            <!-- 文章分类选择 - 发布文章区域 -->
+            <!-- label是页面展示的值，value的🚩值是给js调用待使用的数据 -->
+            <el-option
+              :label="item.cate_name"
+              :value="item.id"
+              v-for="item in cateList"
+              :key="item.id"
+            >
+            </el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -82,7 +95,7 @@ export default {
     return {
       // 文章分类数据
       cateList: [],
-      // 查询参数对象
+      // articleList组件的查询参数对象
       q: {
         pagenum: 1,
         pagesize: 2,
