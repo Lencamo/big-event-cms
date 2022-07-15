@@ -82,10 +82,13 @@
         </el-form-item>
         <!-- 富文本编辑器 -->
         <el-form-item label="文章内容" prop="content">
-          <quill-editor v-model="pubForm.content"></quill-editor>
+          <quill-editor
+            v-model="pubForm.content"
+            @change="contentChangeFn"
+          ></quill-editor>
         </el-form-item>
         <!-- 文章封面 -->
-        <el-form-item label="文章封面">
+        <el-form-item label="文章封面" prop="cover_img">
           <!-- 用来显示封面的图片 -->
           <img
             src="../../assets/images/cover.jpg"
@@ -159,9 +162,18 @@ export default {
           }
         ],
         cate_id: [
-          { required: true, message: '请选择文章标题', trigger: 'blur' }
+          // 使用change事件✨对下拉菜单进行校验
+          { required: true, message: '请选择文章标题', trigger: 'change' }
         ],
-        content: [{ required: true, message: '输入文章内容', trigger: 'blur' }]
+        content: [
+          // 由于quil-editor是引入的，不会自动走校验
+          // 解决办法：用它自带触发函数间接进行校验
+          { required: true, message: '输入文章内容', trigger: 'blur' }
+        ],
+        cover_img: [
+          // 这里的图片校验和前面的富文本器校验一样的解决方法（单独校验）
+          { required: true, message: '请选择封面', trigger: 'blur' }
+        ]
       }
     }
   },
@@ -222,12 +234,28 @@ export default {
         const url = URL.createObjectURL(files[0])
         this.$refs.imgRef.setAttribute('src', url)
       }
+
+      // 封面图片单独校验解决
+      this.$refs.pubFormRef.validateField('cover_img')
     },
     // 发布文章或草稿-按钮点击事件
     pubArticleFn(str) {
       // 1. 设置发布状态
       this.pubForm.state = str
-      console.log(this.pubForm)
+
+      // // 2. 表单预校验（兜底校验）
+      this.$refs.pubFormRef.validate((valid) => {
+        if (!valid) {
+          console.log(this.pubForm)
+        } else {
+          return false
+        }
+      })
+    },
+    // 使用element-ui中的validateField()方法让富文本编辑器实现校验功能
+    contentChangeFn() {
+      // validateField()对部分表单字段进行校验的方法
+      this.$refs.pubFormRef.validateField('content')
     }
   }
 }
