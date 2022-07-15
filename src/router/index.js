@@ -64,6 +64,10 @@ const routes = [
       {
         path: 'art-cate',
         component: () => import('@/components/article-manage/articleCase.vue')
+      },
+      {
+        path: 'art-list',
+        component: () => import('@/components/article-manage/articleList.vue')
       }
     ]
   }
