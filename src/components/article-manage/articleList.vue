@@ -348,10 +348,20 @@ export default {
       // 为 pagesize 赋值
       this.q.pagesize = newSize
 
+      // 解决在非第一页文章列表进行列表条数n切换后，内容不显示的bug
+      // 问题分析1：通过network可以发现切换分页时，发生了两次getArtListFn()请求
+      // bug产生原因：对比请求可以发现 ——
+      // ① 由于条数改变而触发getArtListFn()请求【当然页的n条数据】，结果为空
+      // ② 由于页面改变而触发getArtListFn()请求【页面改变后的n条数据】，结果正常
+      // 若①请求的速度快与②请求的速度时，就会产生一个✨偶发性的bug✨
+      // 解决问题：
+      // 默认展示第一页数据（有能力的也可以让人展示最后一页数据）
+      this.q.pagenum = 1
+
       // 重新发起请求
       this.getArtListFn()
     },
-    // 文章列表页数数发生改变时(element-ui内置回调参数)
+    // 文章列表页数发生改变时(element-ui内置回调参数)
     handleCurrentChangeFn(newPage) {
       // 为页码值赋值
       this.q.pagenum = newPage
