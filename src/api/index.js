@@ -186,3 +186,19 @@ export const delArtCateAPI = (id) => {
     }
   })
 }
+
+// 上面要求传入的是(application/json)json数据
+// 下面这个要求传入的是(multipart/form-data)表单数据
+
+/**
+ * 发布文章
+ * @param {*} fd ForData 表单数据对象
+ * @returns Promise对象
+ */
+export const uploadArticleAPI = (fd) => {
+  return reqAxios({
+    url: '/my/article/add',
+    method: 'POST',
+    data: fd // 参数要的是表单对象, 不能✨写普通对象（若填的是一个普通对象，axios会把它转换为JSON字符串在请求体里交给后台）
+  })
+}

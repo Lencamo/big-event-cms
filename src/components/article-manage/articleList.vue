@@ -53,6 +53,7 @@
       :visible.sync="pubdialogVisible"
       fullscreen
       :before-close="handleClose"
+      @closed="dialogCloseFn"
     >
       <el-form
         :model="pubForm"
@@ -123,7 +124,7 @@
 </template>
 
 <script>
-import { getArtCateListAPI } from '@/api/index'
+import { getArtCateListAPI, uploadArticleAPI } from '@/api/index'
 // 注意✨：js中引入图片要所以import
 import defaultImg from '@/assets/images/cover.jpg'
 
@@ -244,9 +245,35 @@ export default {
       this.pubForm.state = str
 
       // // 2. 表单预校验（兜底校验）
-      this.$refs.pubFormRef.validate((valid) => {
-        if (!valid) {
-          console.log(this.pubForm)
+      this.$refs.pubFormRef.validate(async (valid) => {
+        if (valid) {
+          // 创建 FormData 表单数据对象
+          // FormData类是THML5的内容（是一个用于装文件的容器）
+          const fd = new FormData()
+
+          // 向 FormData 中追加数据
+          // 方式1
+          // fd.append('title', this.pubForm.title)
+          // fd.append('cate_id', this.pubForm.cate_id)
+          // fd.append('content', this.pubForm.content)
+          // fd.append('cover_img', this.pubForm.cover_img)
+          // fd.append('state', this.pubForm.state)
+          // 方式2：使用Object.keys加forEach()
+          Object.keys(this.pubForm).forEach((key) => {
+            fd.append(key, this.pubForm[key])
+          })
+          console.log(fd)
+          // 发起请求
+          const { data: res } = await uploadArticleAPI(fd)
+          console.log(res)
+          if (res.code !== 0) {
+            this.$message.error('发布文章失败！')
+          } else {
+            this.$message.success('发布文章成功！')
+
+            // 关闭对话框
+            this.pubdialogVisible = false
+          }
         } else {
           return false
         }
@@ -256,6 +283,14 @@ export default {
     contentChangeFn() {
       // validateField()对部分表单字段进行校验的方法
       this.$refs.pubFormRef.validateField('content')
+    },
+    // 发布文章或草稿后的操作
+    dialogCloseFn() {
+      // 清空关键数据
+      this.$refs.pubFormRef.resetFields()
+      // 因为这2个变量对应的标签不是表单绑定的, 所以需要✨单独控制
+      this.pubForm.content = ''
+      this.$refs.imgRef.setAttribute('src', defaultImg)
     }
   }
 }
