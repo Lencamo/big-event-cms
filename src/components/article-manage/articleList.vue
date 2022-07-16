@@ -459,8 +459,16 @@ export default {
       // 执行删除的操作
       const { data: res } = await delArticleAPI(id)
 
-      if (res.code !== 0) return this.$message.error('删除失败!')
-      this.$message.success('删除成功!')
+      if (res.code !== 0) return this.$message.error('删除文章失败!')
+      this.$message.success('删除文章成功!')
+
+      // 问题：在最后一页中删除最后一篇文章时，虽然页码能会到上一页，但数据没有出现的小bug
+      // 解决方法：让它重点跳转到上一页
+      // if (this.artList.length === 1) {
+      //   if (this.q.pagenum > 1) {
+      //     this.q.pagenum--
+      //   }
+      // }
 
       // 刷新列表数据
       this.getArtListFn()
