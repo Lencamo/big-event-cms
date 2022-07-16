@@ -1,4 +1,4 @@
-import reqAxios from '@/utils/axios-instance.js'
+import reqAxios from '@/utils/axios/axios-instance.js'
 
 // import $store from '@/store/index'
 

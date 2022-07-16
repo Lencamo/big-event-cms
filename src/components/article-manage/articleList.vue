@@ -46,12 +46,16 @@
         >
       </div>
 
-      <!-- 下方内容区域 -->
-      <!-- 文章表格区域 -->
+      <!-- 下方文章列表内容区域 -->
       <el-table :data="artList" style="width: 100%" border stripe>
         <el-table-column label="文章标题" prop="title"></el-table-column>
         <el-table-column label="分类" prop="cate_name"></el-table-column>
-        <el-table-column label="发表时间" prop="pub_date"></el-table-column>
+        <el-table-column label="发表时间" prop="pub_date">
+          <!-- 巧用✨插槽自定义显示内容 -->
+          <template slot-scope="scope">
+            <span>{{ $formatDate(scope.row.pub_date) }}</span>
+          </template>
+        </el-table-column>
         <el-table-column label="状态" prop="state"></el-table-column>
         <el-table-column label="操作"></el-table-column>
       </el-table>
