@@ -31,9 +31,14 @@
               <el-option label="草稿" value="草稿"></el-option>
             </el-select>
           </el-form-item>
+          <!-- 筛选与重置 -->
           <el-form-item>
-            <el-button type="primary" size="small">筛选</el-button>
-            <el-button type="info" size="small">重置</el-button>
+            <el-button type="primary" size="small" @click="onChooseFn"
+              >筛选</el-button
+            >
+            <el-button type="info" size="small" @click="resetChooseFn"
+              >重置</el-button
+            >
           </el-form-item>
         </el-form>
         <!-- 发表文章的按钮 -->
@@ -227,7 +232,7 @@ export default {
     async getArtListFn() {
       const { data: res } = await getArticleListAPI(this.q)
 
-      console.log(res)
+      // console.log(res)
       if (res.code !== 0) return this.$message.error('获取文章列表失败!')
       this.artList = res.data
       this.total = res.total
@@ -342,8 +347,7 @@ export default {
     handleSizeChangeFn(newSize) {
       // 为 pagesize 赋值
       this.q.pagesize = newSize
-      // 默认展示第一页数据
-      this.q.pagenum = 1
+
       // 重新发起请求
       this.getArtListFn()
     },
@@ -352,6 +356,22 @@ export default {
       // 为页码值赋值
       this.q.pagenum = newPage
       // 重新发起请求
+      this.getArtListFn()
+    },
+    // 触发筛选文章按钮
+    onChooseFn() {
+      this.getArtListFn()
+    },
+    // 触发重置文章筛选按钮
+    resetChooseFn() {
+      // 1. 重置查询参数对象
+      this.q = {
+        pagenum: 1,
+        pagesize: 5,
+        cate_id: '',
+        state: ''
+      }
+      // 2. 重新发起请求
       this.getArtListFn()
     }
   }
