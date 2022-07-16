@@ -52,7 +52,13 @@
       </div>
       <!-- 下方文章列表内容区域 -->
       <el-table :data="artList" style="width: 100%" border stripe>
-        <el-table-column label="文章标题" prop="title"></el-table-column>
+        <el-table-column label="文章标题" prop="title">
+          <template slot-scope="scope">
+            <el-link type="primary" @click="showDetailFn(scope.row.id)">{{
+              scope.row.title
+            }}</el-link>
+          </template>
+        </el-table-column>
         <el-table-column label="分类" prop="cate_name"></el-table-column>
         <el-table-column label="发表时间" prop="pub_date">
           <!-- 巧用✨插槽自定义显示内容 -->
@@ -150,6 +156,29 @@
         </el-form-item>
       </el-form>
     </el-dialog>
+
+    <!-- 查看文章详情-对话框 -->
+    <el-dialog title="文章预览" :visible.sync="detailVisible" width="80%">
+      <h1 class="title">{{ artDetail.title }}</h1>
+
+      <div class="info">
+        <span>作者：{{ artDetail.nickname || artDetail.username }}</span>
+        <span>发布时间：{{ $formatDate(artDetail.pub_date) }}</span>
+        <span>所属分类：{{ artDetail.cate_name }}</span>
+        <span>状态：{{ artDetail.state }}</span>
+      </div>
+
+      <!-- 分割线 -->
+      <el-divider></el-divider>
+
+      <!-- 文章的封面 -->
+      <!-- 追加图片基地址 -->
+      <img :src="baseURL + artDetail.cover_img" alt="" />
+
+      <!-- 文章的详情 -->
+      <!-- 注意✨：这里的内容要用v-html进行解析 -->
+      <div v-html="artDetail.content" class="detail-box"></div>
+    </el-dialog>
   </div>
 </template>
 
@@ -157,15 +186,19 @@
 import {
   getArtCateListAPI,
   uploadArticleAPI,
-  getArticleListAPI
+  getArticleListAPI,
+  getArticleDetailFn
 } from '@/api/index'
 // 注意✨：js中引入图片要所以import
 import defaultImg from '@/assets/images/cover.jpg'
+// 引入图片基地址
+import { baseURL } from '@/utils/axios/axios-instance'
 
 export default {
   name: 'articleList',
   data() {
     return {
+      baseURL: baseURL,
       // 文章分类数据
       cateList: [],
       // articleList组件的查询参数对象
@@ -180,6 +213,9 @@ export default {
       // 总数据条数
       total: 0,
       pubdialogVisible: false,
+      detailVisible: false,
+      // 文章详情数据
+      artDetail: {},
       // 发布文章对话框表单数据对象
       pubForm: {
         title: '',
@@ -383,6 +419,16 @@ export default {
       }
       // 2. 重新发起请求
       this.getArtListFn()
+    },
+    // 展示文章详情链接
+    async showDetailFn(id) {
+      const { data: res } = await getArticleDetailFn(id)
+      // console.log(res)
+
+      if (res.code !== 0) return this.$message.error('获取文章详情失败!')
+      this.artDetail = res.data
+      // 展示文章详情对话框
+      this.detailVisible = true
     }
   }
 }
@@ -416,5 +462,28 @@ export default {
 // 文章列表样式
 .el-pagination {
   margin-top: 15px;
+}
+
+// 文章详情对话框样式美化
+.title {
+  font-size: 24px;
+  text-align: center;
+  font-weight: normal;
+  color: #000;
+  margin: 0 0 10px 0;
+}
+
+.info {
+  font-size: 12px;
+  span {
+    margin-right: 20px;
+  }
+}
+
+// 修改 dialog 内部元素的样式，需要添加样式穿透
+::v-deep .detail-box {
+  img {
+    width: 500px;
+  }
 }
 </style>

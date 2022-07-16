@@ -218,3 +218,17 @@ export const getArticleListAPI = ({ pagenum, pagesize, cate_id, state }) => {
     }
   })
 }
+
+/**
+ * 获取-文章详情接口
+ * @param {*} id 文章id
+ * @returns Promise对象
+ */
+export const getArticleDetailFn = (id) => {
+  return reqAxios({
+    url: '/my/article/info',
+    params: {
+      id
+    }
+  })
+}
