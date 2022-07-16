@@ -45,6 +45,16 @@
           >发表文章</el-button
         >
       </div>
+
+      <!-- 下方内容区域 -->
+      <!-- 文章表格区域 -->
+      <el-table :data="artList" style="width: 100%" border stripe>
+        <el-table-column label="文章标题" prop="title"></el-table-column>
+        <el-table-column label="分类" prop="cate_name"></el-table-column>
+        <el-table-column label="发表时间" prop="pub_date"></el-table-column>
+        <el-table-column label="状态" prop="state"></el-table-column>
+        <el-table-column label="操作"></el-table-column>
+      </el-table>
     </el-card>
 
     <!-- 发布文章-对话框 -->
@@ -124,7 +134,11 @@
 </template>
 
 <script>
-import { getArtCateListAPI, uploadArticleAPI } from '@/api/index'
+import {
+  getArtCateListAPI,
+  uploadArticleAPI,
+  getArticleListAPI
+} from '@/api/index'
 // 注意✨：js中引入图片要所以import
 import defaultImg from '@/assets/images/cover.jpg'
 
@@ -136,11 +150,15 @@ export default {
       cateList: [],
       // articleList组件的查询参数对象
       q: {
-        pagenum: 1,
-        pagesize: 2,
+        pagenum: 1, // 默认显示第一页数据
+        pagesize: 5, // 默认当前页显示几条数据
         cate_id: '',
         state: ''
       },
+      // 文章的列表数据
+      artList: [],
+      // 总数据条数
+      total: 0,
       pubdialogVisible: false,
       // 发布文章对话框表单数据对象
       pubForm: {
@@ -179,8 +197,9 @@ export default {
     }
   },
   created() {
-    // 进入页面时就 请求分类数据
+    // 进入页面时就 请求分类数据、列表数据
     this.getCateListFn()
+    this.getArtListFn()
   },
   methods: {
     // 获取文章分类
@@ -188,6 +207,15 @@ export default {
       const { data: res } = await getArtCateListAPI()
       // console.log(res)
       this.cateList = res.data
+    },
+    // 获取文章列表
+    async getArtListFn() {
+      const { data: res } = await getArticleListAPI(this.q)
+
+      console.log(res)
+      if (res.code !== 0) return this.$message.error('获取文章列表失败!')
+      this.artList = res.data
+      this.total = res.total
     },
 
     // 发表文章-触发按钮
@@ -273,6 +301,9 @@ export default {
 
             // 关闭对话框
             this.pubdialogVisible = false
+
+            // 刷新主页面文章列表数据
+            this.getArtListFn()
           }
         } else {
           return false

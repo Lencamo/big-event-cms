@@ -188,8 +188,7 @@ export const delArtCateAPI = (id) => {
 }
 
 // 上面要求传入的是(application/json)json数据
-// 下面这个要求传入的是(multipart/form-data)表单数据
-
+// 下面这个要求传入的是(multipart/form-data)表单数
 /**
  * 发布文章
  * @param {*} fd ForData 表单数据对象
@@ -200,5 +199,22 @@ export const uploadArticleAPI = (fd) => {
     url: '/my/article/add',
     method: 'POST',
     data: fd // 参数要的是表单对象, 不能✨写普通对象（若填的是一个普通对象，axios会把它转换为JSON字符串在请求体里交给后台）
+  })
+}
+
+/**
+ * 获取文章列表接口
+ * @param {*} param0 { pagenum: 当前页码数, pagesize: 当前页条数, cate_id: 文章分类id, state: 文章状态 }
+ * @returns Promise对象
+ */
+export const getArticleListAPI = ({ pagenum, pagesize, cate_id, state }) => {
+  return reqAxios({
+    url: '/my/article/list',
+    params: {
+      pagenum,
+      pagesize,
+      cate_id,
+      state
+    }
   })
 }
