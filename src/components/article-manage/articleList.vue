@@ -45,7 +45,6 @@
           >发表文章</el-button
         >
       </div>
-
       <!-- 下方文章列表内容区域 -->
       <el-table :data="artList" style="width: 100%" border stripe>
         <el-table-column label="文章标题" prop="title"></el-table-column>
@@ -59,6 +58,18 @@
         <el-table-column label="状态" prop="state"></el-table-column>
         <el-table-column label="操作"></el-table-column>
       </el-table>
+      <!-- 文章列表的分页区域 -->
+      <!-- 分页区域 -->
+      <el-pagination
+        @size-change="handleSizeChangeFn"
+        @current-change="handleCurrentChangeFn"
+        :current-page.sync="q.pagenum"
+        :page-sizes="[2, 3, 5, 10]"
+        :page-size.sync="q.pagesize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+      >
+      </el-pagination>
     </el-card>
 
     <!-- 发布文章-对话框 -->
@@ -326,6 +337,22 @@ export default {
       // 因为这2个变量对应的标签不是表单绑定的, 所以需要✨单独控制
       this.pubForm.content = ''
       this.$refs.imgRef.setAttribute('src', defaultImg)
+    },
+    // 文章列表条数发生改变时(element-ui内置回调参数)
+    handleSizeChangeFn(newSize) {
+      // 为 pagesize 赋值
+      this.q.pagesize = newSize
+      // 默认展示第一页数据
+      this.q.pagenum = 1
+      // 重新发起请求
+      this.getArtListFn()
+    },
+    // 文章列表页数数发生改变时(element-ui内置回调参数)
+    handleCurrentChangeFn(newPage) {
+      // 为页码值赋值
+      this.q.pagenum = newPage
+      // 重新发起请求
+      this.getArtListFn()
     }
   }
 }
@@ -354,5 +381,10 @@ export default {
   width: 400px;
   height: 280px;
   object-fit: cover;
+}
+
+// 文章列表样式
+.el-pagination {
+  margin-top: 15px;
 }
 </style>
