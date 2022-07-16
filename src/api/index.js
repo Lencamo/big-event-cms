@@ -232,3 +232,18 @@ export const getArticleDetailFn = (id) => {
     }
   })
 }
+
+/**
+ * 删除-文章详情接口
+ * @param {*} id 文章id
+ * @returns Promise对象
+ */
+export const delArticleAPI = (id) => {
+  return reqAxios({
+    url: '/my/article/info',
+    method: 'DELETE',
+    params: {
+      id
+    }
+  })
+}

@@ -67,7 +67,16 @@
           </template>
         </el-table-column>
         <el-table-column label="状态" prop="state"></el-table-column>
-        <el-table-column label="操作"></el-table-column>
+        <el-table-column label="操作">
+          <template slot-scope="{ row }">
+            <el-button
+              type="danger"
+              size="mini"
+              @click="removeArticleFn(row.id)"
+              >删除</el-button
+            >
+          </template>
+        </el-table-column>
       </el-table>
       <!-- 文章列表的分页区域 -->
       <!-- 分页区域 -->
@@ -187,7 +196,8 @@ import {
   getArtCateListAPI,
   uploadArticleAPI,
   getArticleListAPI,
-  getArticleDetailFn
+  getArticleDetailFn,
+  delArticleAPI
 } from '@/api/index'
 // 注意✨：js中引入图片要所以import
 import defaultImg from '@/assets/images/cover.jpg'
@@ -429,6 +439,31 @@ export default {
       this.artDetail = res.data
       // 展示文章详情对话框
       this.detailVisible = true
+    },
+    // 文章删除按钮
+    async removeArticleFn(id) {
+      // 1. 询问用户是否要删除
+      const confirmResult = await this.$confirm(
+        '此操作将永久删除该文件, 是否继续?',
+        '提示',
+        {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }
+      ).catch((err) => err)
+
+      // 2. 取消了删除
+      if (confirmResult === 'cancel') return
+
+      // 执行删除的操作
+      const { data: res } = await delArticleAPI(id)
+
+      if (res.code !== 0) return this.$message.error('删除失败!')
+      this.$message.success('删除成功!')
+
+      // 刷新列表数据
+      this.getArtListFn()
     }
   }
 }
