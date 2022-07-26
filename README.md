@@ -1,4 +1,4 @@
-# big-event
+&emsp;&emsp;项目演示地址： http://lencamo.cn/big-event-cms/dist/
 
 ## Project setup
 ```
