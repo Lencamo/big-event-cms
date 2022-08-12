@@ -1,8 +1,9 @@
-&emsp;&emsp;项目演示地址： http://lencamo.cn/big-event-cms/dist/
+&emsp;&emsp;前端项目演示： http://lencamo.cn/big-event-cms/dist/
+&emsp;&emsp;后端项目地址： https://github.com/Lencamo/big-event-cms-api
 
 ## Project setup
 ```
-npm install
+yarn install
 ```
 
 ### Compiles and hot-reloads for development
