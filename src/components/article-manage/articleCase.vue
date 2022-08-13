@@ -153,6 +153,8 @@ export default {
             // 请求成功、失败提示
             if (res.code !== 0) return this.$message.error(res.message)
             this.$message.success(res.message)
+            // 重新请求列表数据
+            this.initCateListFn()
           }
 
           // 刷新列表数据 并 关闭对话框
