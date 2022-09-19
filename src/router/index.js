@@ -7,22 +7,35 @@ Vue.use(VueRouter)
 
 // 解决编程式路由往同一地址跳转时会报错的情况🍗
 const originalPush = VueRouter.prototype.push
-const originalReplace = VueRouter.prototype.replace
+const originalReplace =
+  VueRouter.prototype.replace
 
 // push
-VueRouter.prototype.push = function push(location, onResolve, onReject) {
+VueRouter.prototype.push = function push(
+  location,
+  onResolve,
+  onReject
+) {
   // if (onResolve || onReject) {
   //   return originalPush.call(this, location, onResolve, onReject)
   // }
-  return originalPush.call(this, location).catch((err) => err)
+  return originalPush
+    .call(this, location)
+    .catch((err) => err)
 }
 
 // replace
-VueRouter.prototype.replace = function push(location, onResolve, onReject) {
+VueRouter.prototype.replace = function push(
+  location,
+  onResolve,
+  onReject
+) {
   // if (onResolve || onReject) {
   //   return originalReplace.call(this, location, onResolve, onReject)
   // }
-  return originalReplace.call(this, location).catch((err) => err)
+  return originalReplace
+    .call(this, location)
+    .catch((err) => err)
 }
 
 const routes = [
@@ -33,41 +46,67 @@ const routes = [
   {
     path: '/login',
     // 使用 路由✨懒加载
-    component: () => import('@/views/login/comLogin.vue')
+    component: () =>
+      import('@/views/login/comLogin.vue')
   },
   {
     path: '/register',
-    component: () => import('@/views/register/comRegister.vue')
+    component: () =>
+      import('@/views/register/comRegister.vue')
   },
   {
     path: '/layout',
     // 使用 路由✨懒加载
-    component: () => import('@/views/layout/comLayout.vue'),
+    component: () =>
+      import('@/views/layout/comLayout.vue'),
     redirect: '/layout/home',
     children: [
       {
         path: 'home',
-        component: () => import('@/components/home.vue')
+        component: () =>
+          import('@/components/home.vue')
       },
       {
         path: 'user-info',
-        component: () => import('@/components/person-center/userInfo.vue')
+        component: () =>
+          import(
+            '@/components/person-center/userInfo.vue'
+          )
       },
       {
         path: 'user-avatar',
-        component: () => import('@/components/person-center/changePic.vue')
+        component: () =>
+          import(
+            '@/components/person-center/changePic.vue'
+          )
+      },
+      {
+        path: 'user-avatarPro',
+        component: () =>
+          import(
+            '@/components/person-center/changePic-Pro.vue'
+          )
       },
       {
         path: 'user-pwd',
-        component: () => import('@/components/person-center/resetPassword.vue')
+        component: () =>
+          import(
+            '@/components/person-center/resetPassword.vue'
+          )
       },
       {
         path: 'art-cate',
-        component: () => import('@/components/article-manage/articleCase.vue')
+        component: () =>
+          import(
+            '@/components/article-manage/articleCase.vue'
+          )
       },
       {
         path: 'art-list',
-        component: () => import('@/components/article-manage/articleList.vue')
+        component: () =>
+          import(
+            '@/components/article-manage/articleList.vue'
+          )
       }
     ]
   }

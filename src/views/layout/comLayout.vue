@@ -5,7 +5,10 @@
       <!-- 1、头部区域 -->
       <el-header>
         <!-- 左侧logo -->
-        <img src="../../assets/images/logo.png" alt="" />
+        <img
+          src="../../assets/images/logo.png"
+          alt=""
+        />
         <!-- 右侧菜单 —— 采用element-ui的✨导航菜单 -->
         <el-menu
           class="el-menu-top"
@@ -20,33 +23,50 @@
             <template slot="title">
               <!-- 头像 -->
               <img
-                v-if="!$store.state.userInfo.user_pic"
+                v-if="
+                  !$store.state.userInfo.user_pic
+                "
                 src="../../assets/images/avatar.jpg"
                 alt=""
                 class="avatar"
               />
               <img
                 v-else
-                :src="$store.state.userInfo.user_pic"
+                :src="
+                  $store.state.userInfo.user_pic
+                "
                 alt=""
                 class="avatar"
               />
               <span>个人中心</span>
             </template>
-            <el-menu-item index="/layout/user-info"
-              ><i class="el-icon-s-operation"></i>基本资料</el-menu-item
+            <el-menu-item
+              index="/layout/user-info"
+              ><i class="el-icon-s-operation"></i
+              >基本资料</el-menu-item
             >
-            <el-menu-item index="/layout/user-avatar"
-              ><i class="el-icon-camera"></i>更换头像</el-menu-item
+            <el-menu-item
+              index="/layout/user-avatar"
+              ><i class="el-icon-camera"></i
+              >更换头像</el-menu-item
+            >
+            <el-menu-item
+              index="/layout/user-avatarPro"
+              ><i class="el-icon-camera-solid"></i
+              >更换头像</el-menu-item
             >
             <el-menu-item index="/layout/user-pwd"
-              ><i class="el-icon-key"></i>重置密码</el-menu-item
+              ><i class="el-icon-key"></i
+              >重置密码</el-menu-item
             >
           </el-submenu>
           <!-- 退出 -->
           <!-- 此处对index特殊✨处理，防止其受router属性的影响 -->
-          <el-menu-item index="" @click="menu_logiout"
-            ><i class="el-icon-switch-button"></i>退出</el-menu-item
+          <el-menu-item
+            index=""
+            @click="menu_logiout"
+            ><i class="el-icon-switch-button"></i
+            >退出</el-menu-item
           >
         </el-menu>
       </el-header>
@@ -54,9 +74,20 @@
         <!-- 2、侧边栏区域 -->
         <el-aside width="200px">
           <div class="user-box">
-            <img v-if="user_pic" :src="user_pic" alt="" />
-            <img v-else src="../../assets/images/logo.png" alt="" />
-            <span>欢迎 {{ nickname || username }}</span>
+            <img
+              v-if="user_pic"
+              :src="user_pic"
+              alt=""
+            />
+            <img
+              v-else
+              src="../../assets/images/logo.png"
+              alt=""
+            />
+            <span
+              >欢迎
+              {{ nickname || username }}</span
+            >
           </div>
           <!-- 侧边栏导航部分 -->
           <el-menu
@@ -76,17 +107,23 @@
               <!-- 不包含二级菜单 -->
               <el-menu-item
                 v-if="item.children === null"
-                :index="'/layout' + item.indexPath"
+                :index="
+                  '/layout' + item.indexPath
+                "
                 :key="'/layout' + item.indexPath"
               >
                 <i :class="item.icon"></i>
-                <span slot="title">{{ item.title }}</span>
+                <span slot="title">{{
+                  item.title
+                }}</span>
               </el-menu-item>
 
               <!-- 包含二级菜单 -->
               <el-submenu
                 v-else
-                :index="'/layout' + item.indexPath"
+                :index="
+                  '/layout' + item.indexPath
+                "
                 :key="'/layout' + item.indexPath"
               >
                 <template slot="title">
@@ -96,10 +133,15 @@
                 <!-- ② 进行数据的二次循环 -->
                 <el-menu-item
                   v-for="subItem in item.children"
-                  :key="'/layout' + subItem.indexPath"
-                  :index="'/layout' + subItem.indexPath"
+                  :key="
+                    '/layout' + subItem.indexPath
+                  "
+                  :index="
+                    '/layout' + subItem.indexPath
+                  "
                 >
-                  <i :class="subItem.icon"></i>{{ subItem.title }}
+                  <i :class="subItem.icon"></i
+                  >{{ subItem.title }}
                 </el-menu-item>
               </el-submenu>
             </template>
@@ -111,7 +153,9 @@
             <router-view></router-view>
           </el-main>
           <!-- 3.2底部footer区域 -->
-          <el-footer>© www.deer-sir.cn - 鹿先生</el-footer>
+          <el-footer
+            >© www.deer-sir.cn - 鹿先生</el-footer
+          >
         </el-container>
       </el-container>
     </el-container>
@@ -129,7 +173,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['nickname', 'username', 'user_pic'])
+    ...mapGetters([
+      'nickname',
+      'username',
+      'user_pic'
+    ])
   },
   methods: {
     menu_logiout() {

@@ -14,6 +14,7 @@
     "echarts": "^5.3.3",
     "element-ui": "^2.15.9",
     "vue": "^2.6.14",
+    "vue-cropper": "^0.5.8",
     "vue-quill-editor": "^3.0.6",
     "vue-router": "^3.5.1",
     "vuex": "^3.6.2",

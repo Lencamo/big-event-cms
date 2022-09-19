@@ -11,6 +11,9 @@ import '@/utils/element-ui'
 import '@/utils/vue-quill-editor'
 // 引入dayjs时间格式化包
 import '@/utils/dayjs'
+// 引入图片裁剪插件
+import VueCropper from 'vue-cropper'
+Vue.use(VueCropper)
 
 Vue.config.productionTip = false
 

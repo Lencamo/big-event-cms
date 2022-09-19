@@ -8,7 +8,11 @@ import reqAxios from '@/utils/axios/axios-instance.js'
  * @returns Promise对象
  */
 // 升级：使用解构赋值传参
-export const registerAPI = ({ username, password, repassword }) => {
+export const registerAPI = ({
+  username,
+  password,
+  repassword
+}) => {
   return reqAxios({
     method: 'POST',
     url: '/api/reg',
@@ -27,7 +31,10 @@ export const registerAPI = ({ username, password, repassword }) => {
  * @param {*} param0 {username: 用户名, password: 密码}
  * @returns Promise对象
  */
-export const loginAPI = ({ username, password }) => {
+export const loginAPI = ({
+  username,
+  password
+}) => {
   return reqAxios({
     method: 'POST',
     url: '/api/login',
@@ -115,7 +122,11 @@ export const updateAvatarAPI = (avatar) => {
  * @param {*} param0 { old_pwd: 旧密码, new_pwd: 新密码, re_pwd: 新密码确认 }
  * @returns Promise对象
  */
-export const updatePwdAPI = ({ old_pwd, new_pwd, re_pwd }) => {
+export const updatePwdAPI = ({
+  old_pwd,
+  new_pwd,
+  re_pwd
+}) => {
   return reqAxios({
     url: '/my/updatepwd',
     method: 'PATCH',
@@ -144,7 +155,10 @@ export const getArtCateListAPI = () => {
  * @param {*} param0 { cate_name: 文章分类名字, cate_alias: 文章分类别名 }
  * @returns Promise对象
  */
-export const addArtCateAPI = ({ cate_name, cate_alias }) => {
+export const addArtCateAPI = ({
+  cate_name,
+  cate_alias
+}) => {
   return reqAxios({
     url: '/my/cate/add',
     method: 'POST',
@@ -160,7 +174,11 @@ export const addArtCateAPI = ({ cate_name, cate_alias }) => {
  * @param {*} param0 { id: 文章分类id, cate_name: 文章分类名字, cate_alias: 文章分类别名 }
  * @returns Promise对象
  */
-export const updateArtCateAPI = ({ id, cate_name, cate_alias }) => {
+export const updateArtCateAPI = ({
+  id,
+  cate_name,
+  cate_alias
+}) => {
   return reqAxios({
     url: '/my/cate/info',
     method: 'PUT',
@@ -207,7 +225,12 @@ export const uploadArticleAPI = (fd) => {
  * @param {*} param0 { pagenum: 当前页码数, pagesize: 当前页条数, cate_id: 文章分类id, state: 文章状态 }
  * @returns Promise对象
  */
-export const getArticleListAPI = ({ pagenum, pagesize, cate_id, state }) => {
+export const getArticleListAPI = ({
+  pagenum,
+  pagesize,
+  cate_id,
+  state
+}) => {
   return reqAxios({
     url: '/my/article/list',
     params: {

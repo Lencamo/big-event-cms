@@ -6,14 +6,10 @@
       </div>
       <div>
         <!-- 图片，用来展示用户选择的头像 -->
-        <img
-          v-if="!user_pic"
-          class="the_img"
-          src="../../assets/images/avatar.jpg"
-          alt=""
-        />
+        <img v-if="!user_pic" class="the_img" src="../../assets/images/avatar.jpg" alt="" />
 
         <img v-else class="the_img" :src="user_pic" alt="" />
+
         <!-- 按钮区域 -->
         <div class="btn-box">
           <input
@@ -23,9 +19,7 @@
             ref="iptRef"
             @change="onFileChange"
           />
-          <el-button type="primary" icon="el-icon-plus" @click="chooseImg"
-            >选择图片</el-button
-          >
+          <el-button type="primary" icon="el-icon-plus" @click="chooseImg">选择图片</el-button>
           <el-button
             type="success"
             icon="el-icon-upload"
