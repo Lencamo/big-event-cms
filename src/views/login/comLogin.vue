@@ -3,14 +3,11 @@
     <!-- 登录的盒子 -->
     <div class="login-box">
       <!-- 标题的盒子 -->
-      <div class="title-box"></div>
+      <div class="title-box">个人笔记库后台系统</div>
       <!-- 登录的表单区域 —— 使用element-ui -->
       <el-form ref="loginForm" :model="loginForm" :rules="loginRules">
         <el-form-item prop="username">
-          <el-input
-            v-model="loginForm.username"
-            placeholder="请输入用户名"
-          ></el-input>
+          <el-input v-model="loginForm.username" placeholder="请输入用户名"></el-input>
         </el-form-item>
         <el-form-item prop="password">
           <el-input
@@ -20,11 +17,9 @@
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button class="btn-login" type="primary" @click="btn_login"
-            >登录</el-button
-          >
-          <el-link type="info" @click="$router.push('/register')"
-            >去注册</el-link
+          <el-button class="btn-login" type="primary" @click="btn_login">登录</el-button>
+          <el-link class="change-link" type="info" @click="$router.push('/register')"
+            >没有账号?</el-link
           >
         </el-form-item>
       </el-form>
@@ -105,7 +100,8 @@ export default {
   .login-box {
     width: 400px;
     height: 270px;
-    background-color: #fff;
+    background-color: #6f88a8;
+    opacity: 0.8;
     border-radius: 3px;
     position: absolute;
     left: 50%;
@@ -116,11 +112,22 @@ export default {
 
     .title-box {
       height: 60px;
-      background: url('../../assets/images/login_title.png') center no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 600;
     }
 
     .btn-login {
       width: 100%;
+    }
+
+    .change-link {
+      color: #afbbc7;
+      float: right;
+      font-weight: 800;
+      border-bottom: 2px solid red;
     }
   }
 }

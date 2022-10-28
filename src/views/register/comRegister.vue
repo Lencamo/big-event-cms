@@ -3,21 +3,14 @@
     <!-- 注册的盒子 -->
     <div class="reg-box">
       <!-- 标题的盒子 -->
-      <div class="title-box"></div>
+      <div class="title-box">个人笔记库后台系统</div>
       <!-- 注册的表单区域 —— 【element-ui✨】 -->
       <el-form ref="form" :model="regFrom" :rules="regRules">
         <el-form-item prop="username">
-          <el-input
-            v-model="regFrom.username"
-            placeholder="请输入用户名"
-          ></el-input>
+          <el-input v-model="regFrom.username" placeholder="请输入用户名"></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input
-            v-model="regFrom.password"
-            placeholder="请输入密码"
-            type="password"
-          ></el-input>
+          <el-input v-model="regFrom.password" placeholder="请输入密码" type="password"></el-input>
         </el-form-item>
         <el-form-item prop="repassword">
           <el-input
@@ -27,10 +20,8 @@
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button class="btn-reg" type="primary" @click="btn_reg"
-            >立即创建</el-button
-          >
-          <el-link type="info" @click="$router.push('/login')">去登录</el-link>
+          <el-button class="btn-reg" type="primary" @click="btn_reg">立即创建</el-button>
+          <el-link class="change-link" type="info" @click="$router.push('/login')">去登录</el-link>
         </el-form-item>
       </el-form>
     </div>
@@ -114,7 +105,8 @@ export default {
   .reg-box {
     width: 400px;
     height: 335px;
-    background-color: #fff;
+    background-color: #6f88a8;
+    opacity: 0.8;
     border-radius: 3px;
     position: absolute;
     left: 50%;
@@ -125,11 +117,22 @@ export default {
 
     .title-box {
       height: 60px;
-      background: url('../../assets/images/login_title.png') center no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 600;
     }
 
     .btn-reg {
       width: 100%;
+    }
+
+    .change-link {
+      color: #afbbc7;
+      float: right;
+      font-weight: 800;
+      border-bottom: 2px solid red;
     }
   }
 }
