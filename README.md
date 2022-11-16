@@ -1,4 +1,4 @@
-&emsp;&emsp;前端项目演示： http://lencamo.cn/big-event-cms/dist/
+&emsp;&emsp;前端项目演示： http://43.138.42.251:81/#/login
 
 &emsp;&emsp;后端项目地址： https://github.com/Lencamo/big-event-cms-api
 
